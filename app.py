@@ -21,5 +21,6 @@ def calculator():
     # Render the template with instance metadata
     return render_template('calculator.html', instance_id=instance_id, local-ipv4=local-ipv4)
 
-if __name__ == "__main__":
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8080, debug=True)
+

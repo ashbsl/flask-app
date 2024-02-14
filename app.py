@@ -11,16 +11,15 @@ def calculator():
         token = token_response.text.strip()
         instance_id_response = requests.get("http://169.254.169.254/latest/meta-data/instance-id", headers={"X-aws-ec2-metadata-token": token})
         instance_id = instance_id_response.text.strip()
-        local-ipv4_response = requests.get("http://169.254.169.254/latest/meta-data/placement/local-ipv4", headers={"X-aws-ec2-metadata-token": token})
-        local-ipv4 = local_ipv4_response.text.strip()
+        local_ipv4_response = requests.get("http://169.254.169.254/latest/meta-data/local-ipv4", headers={"X-aws-ec2-metadata-token": token})
+        local_ipv4 = local_ipv4_response.text.strip()
     except requests.exceptions.RequestException as e:
         print("Error fetching instance metadata:", e)
         instance_id = "Error"
-        local-ipv4 = "Error"
+        local_ipv4 = "Error"
     
     # Render the template with instance metadata
-    return render_template('calculator.html', instance_id=instance_id, local-ipv4=local-ipv4)
+    return render_template('calculator.html', instance_id=instance_id, local_ipv4=local_ipv4)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True)
-

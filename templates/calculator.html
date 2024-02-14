@@ -7,7 +7,8 @@
 </head>
 <body>
     <h1>Simple Calculator</h1>
-    <p>Instance ID: <span id="instance-id">Loading...</span></p>
+    <p>Instance ID: {{ instance_id }}</p>
+    <p>IP Address: {{ local-ipv4 }}</p>
     <form action="/calculate" method="post">
         <input type="number" name="num1" placeholder="Enter first number" required>
         <input type="number" name="num2" placeholder="Enter second number" required>
@@ -19,35 +20,5 @@
         </select>
         <button type="submit">Calculate</button>
     </form>
-
-    <script>
-        // Fetch instance metadata token
-        fetch('http://169.254.169.254/latest/api/token', {
-            method: 'PUT',
-            headers: {
-                'X-aws-ec2-metadata-token-ttl-seconds': '3600'
-            }
-        })
-        .then(response => response.text())
-        .then(token => {
-            // Use the token to fetch instance metadata
-            fetch('http://169.254.169.254/latest/meta-data/instance-id', {
-                headers: {
-                    'X-aws-ec2-metadata-token': token
-                }
-            })
-            .then(response => response.text())
-            .then(instanceId => {
-                // Update the instance ID in the HTML
-                document.getElementById('instance-id').textContent = instanceId;
-            })
-            .catch(error => {
-                console.error('Error fetching instance metadata:', error);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching instance metadata token:', error);
-        });
-    </script>
 </body>
 </html>
